@@ -65,7 +65,6 @@ async def create_user(user_data: schema.CreateUserRequest, session: SessionDepen
         role = await auth.get_role(session, 'admin')
     else:
         role = await auth.get_role(session, 'user')
-    # role = await auth.get_default_role(session)
     user.roles = [role]
     await crud.add_item(session, user)
 

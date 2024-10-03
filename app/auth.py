@@ -1,21 +1,8 @@
 import bcrypt
-from config import DEFAULT_ROLE,ADMIN_ROLE
 from fastapi import HTTPException
 from models import ORM_CLS, ORM_OBJECT, Right, Role, Token, User
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-
-async def get_default_role(session: AsyncSession):
-    query = select(Role).where(Role.name == DEFAULT_ROLE)
-    role = await session.scalar(query)
-    return role
-
-
-async def get_admin_role(session: AsyncSession):
-    query = select(Role).where(Role.name == ADMIN_ROLE)
-    role = await session.scalar(query)
-    return role
 
 
 async def get_role(session: AsyncSession, role_name):
