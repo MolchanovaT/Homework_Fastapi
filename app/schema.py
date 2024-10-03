@@ -1,4 +1,5 @@
 import datetime
+import uuid
 from typing import Literal
 
 from pydantic import BaseModel
@@ -13,7 +14,6 @@ class StatusSuccessBase(BaseModel):
 
 
 class GetAdvertisementResponse(BaseModel):
-
     id: int
     title: str
     description: str
@@ -26,7 +26,6 @@ class CreateAdvertisementRequest(BaseModel):
     title: str
     description: str
     price: float = 0
-    user_id: int
 
 
 class CreateAdvertisementResponse(IdReturnBase):
@@ -37,7 +36,6 @@ class UpdateAdvertisementRequest(BaseModel):
     title: str | None = None
     description: str | None = None
     price: float | None = None
-    user_id: int | None = None
 
 
 class UpdateAdvertisementResponse(IdReturnBase):
@@ -48,18 +46,31 @@ class DeleteAdvertisementResponse(StatusSuccessBase):
     pass
 
 
-class GetUserResponse(BaseModel):
-
-    id: int
+class BaseUser(BaseModel):
     name: str
+    password: str
+    is_admin: bool
 
 
-class CreateUserRequest(BaseModel):
-    name: str
+class LoginRequest(BaseUser):
+    pass
+
+
+class LoginResponse(BaseModel):
+    token: uuid.UUID
+
+
+class CreateUserRequest(BaseUser):
+    pass
 
 
 class CreateUserResponse(IdReturnBase):
     pass
+
+
+class GetUserResponse(BaseModel):
+    id: int
+    name: str
 
 
 class UpdateUserRequest(BaseModel):
